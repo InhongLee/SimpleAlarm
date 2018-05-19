@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tm:TermDictionary xmlns:tm="http://exerd.com/term-model" version="1.1">
+  <term name="개발" physicalName="DEV" physicalDescription="DEVELOPMENT"/>
+  <term name="개발자" physicalName="DEVER" physicalDescription="DEVELOPER"/>
+  <term name="ID" physicalName="ID" physicalDescription="IDENTIFICATION"/>
+  <term name="PW" physicalName="PW" physicalDescription="PASSWORD"/>
+  <term name="최종" physicalName="LST" physicalDescription="LAST"/>
+  <term name="접속" physicalName="CONN" physicalDescription="CONNECTION"/>
+  <term name="일자" physicalName="DT" physicalDescription="DATE"/>
+  <term name="시간" physicalName="TM" physicalDescription="TIME"/>
+  <term name="일시" physicalName="DTTM" physicalDescription="DATE_TIME">
+    <physicalSynonyms>TS</physicalSynonyms>
+  </term>
+  <term name="IP" physicalName="IP" physicalDescription="INTERNET PROTOCOL"/>
+  <term name="삭제" physicalName="DEL" physicalDescription="DELETE"/>
+  <term name="여부" physicalName="YN" physicalDescription="YES_NO"/>
+  <term name="최초" physicalName="FST" physicalDescription="FIRST"/>
+  <term name="처리" physicalName="PC" physicalDescription="PROCESSING"/>
+  <term name="수정" physicalName="UPD" physicalDescription="UPDATE"/>
+  <term name="최종수정" physicalName="LUPD" physicalDescription="LAST_UPDATE"/>
+  <term name="수" physicalName="CNT" physicalDescription="COUNT"/>
+  <term name="고객" physicalName="CUST" physicalDescription="CUSTOMER"/>
+  <term name="일련" physicalName="SQ" physicalDescription="SEQUENCE"/>
+  <term name="번호" physicalName="NO" physicalDescription="NUMBER"/>
+  <term name="일련번호" physicalName="SQNO" physicalDescription="SEQUENCE_NUMBER"/>
+  <term name="일정" description="본래 의미는 유닉스계열의 잡스케줄러 시스템이지만, 현재는 그냥 잡 스케줄러와 동일한 의미로 불린다." physicalName="CRON"/>
+  <term name="작업" physicalName="JOB"/>
+  <term name="코드" physicalName="CD" physicalDescription="CODE"/>
+  <term name="확인" physicalName="CHK" physicalDescription="CHECK"/>
+  <term name="일시" physicalName="TS" physicalDescription="TIMESTAMP"/>
+  <term name="일정" physicalName="SCH" physicalDescription="SCHEDULE"/>
+  <term name="설정" physicalName="SET"/>
+  <term name="선택" physicalName="SELECT" physicalDescription="SELECT"/>
+  <term name="주" physicalName="WK" physicalDescription="WEEK"/>
+  <term name="간격" physicalName="ITV" physicalDescription="INTERVAL">
+    <synonyms>간</synonyms>
+  </term>
+  <term name="요일" physicalName="DAY" physicalDescription="DAY"/>
+  <term name="발생" physicalName="OCC" physicalDescription="OCCUR"/>
+  <term name="알람" physicalName="ALARM" physicalDescription="ALARM"/>
+  <term name="월" physicalName="MTH" physicalDescription="MONTH"/>
+  <term name="규칙" physicalName="RULE" physicalDescription="RULE"/>
+  <term name="시작" physicalName="ST" physicalDescription="START"/>
+  <term name="종료" physicalName="ED" physicalDescription="END"/>
+</tm:TermDictionary>

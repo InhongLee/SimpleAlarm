@@ -1,0 +1,10 @@
+프로젝트 생성
+초기 빌드
+서버에서 실행
+한글표시가능하게 web.xml 수정
+pom.xml에서 java 버전을 1.8로 spring framework 버전을 4.3.9.RELEASE로 변겅
+pom.xml에 aopalliance dependency를 추가
+프로젝트 설정에서 project facets항목의 java version을 1.8로 변경
+servlet-context.xml의 task namespace 체크
+servlet-context.xml에 task annotion driven 태그 추가
+@scheduled(cron = "* * * * * *") 메소드 작성
