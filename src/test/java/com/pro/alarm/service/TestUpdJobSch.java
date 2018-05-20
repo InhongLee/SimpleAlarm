@@ -3,6 +3,7 @@ package com.pro.alarm.service;
 import javax.inject.Inject;
 
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -106,6 +107,7 @@ public class TestUpdJobSch {
 	}
 	
 	@Test
+	@Ignore("나중에 다시 테스트")
 	public void test1230_06srchJobChkYn() throws Exception {
 		model.addAttribute("req", req);
 		thrown.expect(AlarmException.class);
