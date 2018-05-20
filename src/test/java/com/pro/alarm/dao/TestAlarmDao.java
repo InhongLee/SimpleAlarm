@@ -1,4 +1,4 @@
-package com.pro.alarm;
+package com.pro.alarm.dao;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
