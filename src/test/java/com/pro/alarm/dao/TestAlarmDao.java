@@ -50,7 +50,7 @@ public class TestAlarmDao {
 	}
 	
 	@Test
-	public void test1000_CRUD_job_sch() throws Exception {
+	public void TEST1000_CRUD_JOB_SCH() throws Exception {
 		JobSchInfoDto dto = new JobSchInfoDto();
 		//insert
 		dto.setDEVER_ID	("amaco78"		);

@@ -60,6 +60,24 @@ public class Test1200_srchJobSch {
 	}
 	
 	@Test
+	public void test1216_srchJobSchStdtChk() throws Exception {
+		req.removeParameter("STDT");
+		model.addAttribute("req", req);
+		thrown.expect(AlarmException.class);
+		thrown.expectMessage("조회시작일자는 필수입력사항입니다.");
+		service.srchJobSch(model);
+	}
+	
+	@Test
+	public void test1217_srchJobSchEddtChk() throws Exception {
+		req.removeParameter("EDDT");
+		model.addAttribute("req", req);
+		thrown.expect(AlarmException.class);
+		thrown.expectMessage("조회종료일자는 필수입력사항입니다.");
+		service.srchJobSch(model);
+	}
+	
+	@Test
 	public void test1202_srchJobSch_diffDate() throws Exception {
 		req.setParameter("STDT", "20180101");
 		model.addAttribute("req",req);
@@ -111,12 +129,14 @@ public class Test1200_srchJobSch {
 		assertNull("지연여부를 선택하였으나 종료일자 초기화에 실패하였습니다.",daoMap.get("EDDT"));
 	}
 	
+	//조회조건 cust_id, job_cd 포함할 경우
 	@SuppressWarnings("unchecked")
 	@Test
-	public void test1205_srchJobSch_orderByCustId() throws Exception {
+	public void test1215_srchJobSch_srchFiler() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		req.setParameter("ORDERBY_TYPE", "ASC");
-		req.setParameter("ORDERBY_COL", "CUST_ID");
+		req.setParameter("CUST_ID", "testCust");
+		req.removeParameter("DELAY_CHK");
+		req.setParameter("JOB_CD", "testJob");
 		model.addAttribute("req", req);
 		//기대정의
 		JobSchInfoDto dto = new JobSchInfoDto();
@@ -125,89 +145,15 @@ public class Test1200_srchJobSch {
 		List<JobSchInfoDto> dtos = new ArrayList<JobSchInfoDto>();
 		dtos.add(dto);
 		doReturn(dtos).when(alarmDao).srchJobSchLst(anyMap());
-				
-		List<JobSchInfoDto> jobScheduleDtos = new ArrayList<>();
+		
 		service.srchJobSch(model);
+		List<JobSchInfoDto> jobScheduleDtos = new ArrayList<>();
 		jobScheduleDtos = (List<JobSchInfoDto>) model.get("jobScheduleDtos");
 		Map<String, Object> daoMap = new HashMap<>();
 		daoMap = (Map<String, Object>) model.get("daoMap");
 		assertEquals("조회를 실패하였습니다.", 1, jobScheduleDtos.size());
-		assertEquals("정렬조건이 선택되었으나 반영에 실패하였습니다.", "ASC", daoMap.get("ORDERBY_TYPE"));
-		assertEquals("정렬필드가 선택되었으나 반영에 실패하였습니다.", "CUST_ID", daoMap.get("ORDERBY_COL"));
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Test
-	public void test1206_srchJobSch_orderBySetTm() throws Exception {
-		MockitoAnnotations.initMocks(this);
-		req.setParameter("ORDERBY_TYPE", "ASC");
-		req.setParameter("ORDERBY_COL", "SET_TM");
-		model.addAttribute("req", req);
-		//기대정의
-		JobSchInfoDto dto = new JobSchInfoDto();
-		dto.setDEVER_ID("testDever");
-		dto.setCUST_ID("testCust");
-		List<JobSchInfoDto> dtos = new ArrayList<JobSchInfoDto>();
-		dtos.add(dto);
-		doReturn(dtos).when(alarmDao).srchJobSchLst(anyMap());
-				
-		List<JobSchInfoDto> jobScheduleDtos = new ArrayList<>();
-		service.srchJobSch(model);
-		jobScheduleDtos = (List<JobSchInfoDto>) model.get("jobScheduleDtos");
-		Map<String, Object> daoMap = new HashMap<>();
-		daoMap = (Map<String, Object>) model.get("daoMap");
-		assertEquals("조회를 실패하였습니다.", 1, jobScheduleDtos.size());
-		assertEquals("정렬조건이 선택되었으나 반영에 실패하였습니다.", "ASC", daoMap.get("ORDERBY_TYPE"));
-		assertEquals("정렬필드가 선택되었으나 반영에 실패하였습니다.", "SET_TM", daoMap.get("ORDERBY_COL"));
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Test
-	public void test1207_srchJobSch_orderByJobCd() throws Exception {
-		MockitoAnnotations.initMocks(this);
-		req.setParameter("ORDERBY_TYPE", "ASC");
-		req.setParameter("ORDERBY_COL", "JOB_CD");
-		model.addAttribute("req", req);
-		//기대정의
-		JobSchInfoDto dto = new JobSchInfoDto();
-		dto.setDEVER_ID("testDever");
-		dto.setCUST_ID("testCust");
-		List<JobSchInfoDto> dtos = new ArrayList<JobSchInfoDto>();
-		dtos.add(dto);
-		doReturn(dtos).when(alarmDao).srchJobSchLst(anyMap());
-				
-		List<JobSchInfoDto> jobScheduleDtos = new ArrayList<>();
-		service.srchJobSch(model);
-		jobScheduleDtos = (List<JobSchInfoDto>) model.get("jobScheduleDtos");
-		Map<String, Object> daoMap = new HashMap<>();
-		daoMap = (Map<String, Object>) model.get("daoMap");
-		assertEquals("조회를 실패하였습니다.", 1, jobScheduleDtos.size());
-		assertEquals("정렬조건이 선택되었으나 반영에 실패하였습니다.", "ASC", daoMap.get("ORDERBY_TYPE"));
-		assertEquals("정렬필드가 선택되었으나 반영에 실패하였습니다.", "JOB_CD", daoMap.get("ORDERBY_COL"));
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Test
-	public void test1208_srchJobSch_orderByChkYn() throws Exception {
-		MockitoAnnotations.initMocks(this);
-		req.setParameter("ORDERBY_TYPE", "DESC");
-		req.setParameter("ORDERBY_COL", "CHK_YN");
-		model.addAttribute("req", req);
-		//기대정의
-		JobSchInfoDto dto = new JobSchInfoDto();
-		dto.setDEVER_ID("testDever");
-		dto.setCUST_ID("testCust");
-		List<JobSchInfoDto> dtos = new ArrayList<JobSchInfoDto>();
-		dtos.add(dto);
-		doReturn(dtos).when(alarmDao).srchJobSchLst(anyMap());
-				
-		List<JobSchInfoDto> jobScheduleDtos = new ArrayList<>();
-		service.srchJobSch(model);
-		jobScheduleDtos = (List<JobSchInfoDto>) model.get("jobScheduleDtos");
-		Map<String, Object> daoMap = new HashMap<>();
-		daoMap = (Map<String, Object>) model.get("daoMap");
-		assertEquals("조회를 실패하였습니다.", 1, jobScheduleDtos.size());
-		assertEquals("정렬조건이 선택되었으나 반영에 실패하였습니다.", "DESC", daoMap.get("ORDERBY_TYPE"));
-		assertEquals("정렬필드가 선택되었으나 반영에 실패하였습니다.", "CHK_YN", daoMap.get("ORDERBY_COL"));
+		assertEquals("고객ID를 조회조건에 설정하였으나 반영에 실패하였습니다.","testCust",daoMap.get("CUST_ID"));
+		assertEquals("일정코드를 조회조건에 설정하였으나 반영에 실패하였습니다.","testJob",daoMap.get("JOB_CD"));
+		assertNull("지연여부가 null값이 아닙니다.",daoMap.get("DELAY_CHK"));
 	}
 }

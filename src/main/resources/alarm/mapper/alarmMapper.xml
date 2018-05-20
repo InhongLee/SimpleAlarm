@@ -125,15 +125,15 @@
 		UPDATE	TS001_JOB_SCH
 		<set>
 			<if test="SET_TM != null"		>SET_TM 		= TO_TIMESTAMP(#{SET_TM},'YYYYMMDD HH24MI')</if>
-			<if test="JOB_CD != null"		>, JOB_CD 		= #{JOB_CD}</if>
-			<if test="CHK_YN != null"		>, CHK_YN 		= #{CHK_YN}</if>
-			<if test="LST_CHK_TS != null"	>, LST_CHK_TS 	= TO_TIMESTAMP(#{LST_CHK_TS},'YYYYMMDD HH24MISS.FF6')</if>
-			<if test="WK_ITV_RULE != null"	>, WK_ITV_RULE	= #{WK_ITV_RULE}</if>
-			<if test="ST_MTH != null"		>, ST_MTH		= #{ST_MTH}</if>
-			<if test="ED_MTH != null"		>, ED_MTH		= #{ED_MTH}</if>
-			<if test="DEL_YN != null"		>, DEL_YN 		= #{DEL_YN}</if>
-			<if test="PC_TS == null"		>, PC_TS 		= SYSTIMESTAMP</if>
-			<if test="LUPD_CNT == null"		>, LUPD_CNT 	= (SELECT NVL(MAX(LUPD_CNT),0) + 1 AS LUPD_CNT
+			<if test="JOB_CD != null"		>,JOB_CD 		= #{JOB_CD}</if>
+			<if test="CHK_YN != null"		>,CHK_YN 		= #{CHK_YN}</if>
+			<if test="LST_CHK_TS != null"	>,LST_CHK_TS 	= TO_TIMESTAMP(#{LST_CHK_TS},'YYYYMMDD HH24MISS.FF6')</if>
+			<if test="WK_ITV_RULE != null"	>,WK_ITV_RULE	= #{WK_ITV_RULE}</if>
+			<if test="ST_MTH != null"		>,ST_MTH			= #{ST_MTH}</if>
+			<if test="ED_MTH != null"		>,ED_MTH			= #{ED_MTH}</if>
+			<if test="DEL_YN != null"		>,DEL_YN 		= #{DEL_YN}</if>
+			<if test="true"					>,PC_TS 			= SYSTIMESTAMP</if>
+			<if test="true"					>,LUPD_CNT 		= (SELECT NVL(MAX(LUPD_CNT),0) + 1 AS LUPD_CNT
 																FROM TS001_JOB_SCH 
 																WHERE   DEVER_ID    = #{DEVER_ID}
 																AND     CUST_ID     = #{CUST_ID}
@@ -151,7 +151,6 @@
 		WHERE   DEVER_ID    = #{DEVER_ID}
 		AND     CUST_ID     = #{CUST_ID}
 		AND     SQNO        = #{SQNO}
-		AND		LUPD_CNT	= #{LUPD_CNT}
 	</delete>
 
 	<select id="srchDataChgYn" parameterType="JobSchInfoDto" resultType="int">
