@@ -70,10 +70,12 @@ public class AlarmServiceImpl extends Utlz implements AlarmService{
 				}
 			}
 		}
-		
+		System.out.println(daoMap.toString());
+		System.out.println(alarmDao.srchJobSchLst(daoMap).toString());
 		//Execution			
 		jobScheduleDtos = alarmDao.srchJobSchLst(daoMap);
 		//조회결과 후처리
+		model.addAttribute("daoMap", daoMap);
 		model.addAttribute("jobScheduleDtos", jobScheduleDtos);
 	}
 
