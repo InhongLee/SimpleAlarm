@@ -10,5 +10,5 @@ public interface AlarmService {
 	
 	public void updJobSch(Model model) throws Exception;
 	
-	public void del_job_sch(Model model) throws Exception;
+	public void delJobSch(Model model) throws Exception;
 }

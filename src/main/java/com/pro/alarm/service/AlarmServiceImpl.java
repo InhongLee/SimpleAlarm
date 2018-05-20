@@ -104,8 +104,8 @@ public class AlarmServiceImpl extends Utlz implements AlarmService{
 		HttpServletRequest req = (HttpServletRequest) map.get("req");
 		if(Utlz.isNull(req.getParameter("DEVER_ID"	))) throw new AlarmException("개발자ID는 필수입력항목입니다."	);
 		if(Utlz.isNull(req.getParameter("CUST_ID"	))) throw new AlarmException("고객ID는 필수입력항목입니다."	);
-		if(Utlz.isNull(req.getParameter("SQNO"		))) throw new AlarmException("일련번호는 필수입력항목입니다."	);
-		if(Utlz.isNull(req.getParameter("LUPD_CNT"	))) throw new AlarmException("최종수정수는 필수입력항목입니다.");
+		if(!Utlz.isNum(req.getParameter("SQNO"		))) throw new AlarmException("일련번호는 숫자여야 합니다.."	);
+		if(!Utlz.isNum(req.getParameter("LUPD_CNT"	))) throw new AlarmException("최종수정수는 숫자여야 합니다.");
 		
 		JobSchInfoDto dto 	= new JobSchInfoDto();
 		String 	DEVER_ID	= req.getParameter("DEVER_ID");
@@ -155,31 +155,23 @@ public class AlarmServiceImpl extends Utlz implements AlarmService{
 	}
 	
 	@Override
-	public void del_job_sch(Model model) throws Exception {
+	public void delJobSch(Model model) throws Exception {
 		Map<String, Object> map = model.asMap(); 
 		HttpServletRequest req = (HttpServletRequest) map.get("req");
 		
-		//input variable validation
-		boolean validCheck = true;
-		//condition.1	apiUser == null > return;
-		if(Utlz.isNull(req.getParameter("apiUser"))) validCheck = false;
-		//condition.2	apiUser is exist but appUser is not exist > return false;
-		if(Utlz.isNull(req.getParameter("appUser"))) validCheck = false;
-		//condition.3	apiUser, appUser are exist but sqno is not exist > return false;
-		if(Utlz.isNull(req.getParameter("sqno"))) validCheck = false;
-		//condition.4	sqno is not integer > return false;
-		if(!Utlz.isNum(req.getParameter("sqno"))) validCheck = false;
+		if(Utlz.isNull(req.getParameter("DEVER_ID"	))) throw new AlarmException("개발자ID는 필수입력항목입니다."	);	
+		if(Utlz.isNull(req.getParameter("CUST_ID"	))) throw new AlarmException("고객ID는 필수입력항목입니다."	);
+		if(!Utlz.isNum(req.getParameter("SQNO"		))) throw new AlarmException("일련번호는 숫자여야 합니다."		);
 		
-		if(validCheck) {
-			JobSchInfoDto dto = new JobSchInfoDto();
-			dto.setDEVER_ID(req.getParameter("apiUser"));
-			dto.setCUST_ID(req.getParameter("appUser"));
-			int nSqno = Integer.valueOf(req.getParameter("sqno"));
-			dto.setSQNO(nSqno);
-			
-			int delCnt = alarmDao.delJobSch(dto);
-			
-			model.addAttribute("delCnt", delCnt);
-		}
+		JobSchInfoDto dto = new JobSchInfoDto();
+		dto.setDEVER_ID(req.getParameter("DEVER_ID"));
+		dto.setCUST_ID(req.getParameter("CUST_ID"));
+		int nSqno = Integer.valueOf(req.getParameter("SQNO"));
+		dto.setSQNO(nSqno);
+		
+		int delCnt = alarmDao.delJobSch(dto);
+		
+		model.addAttribute("jobSchInfoDto", dto);
+		model.addAttribute("delCnt", delCnt);
 	}
 }

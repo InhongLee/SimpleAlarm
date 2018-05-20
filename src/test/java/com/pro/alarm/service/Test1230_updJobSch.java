@@ -32,18 +32,18 @@ public class Test1230_updJobSch {
 	@Parameters
 	public static Collection<Object[]> data() {
 		return Arrays.asList(new Object[][]{
-			{null		, null		, null	, null	, null		, null		, null, null						, null		, null, null, null},
-			{"testDever", null		, null	, null	, null		, null		, null, null						, null		, null, null, null},
-			{"testDever", "testCust", null	, null	, null		, null		, null, null						, null		, null, null, null},
-			{"testDever", "testCust", "1"	, null	, null		, null		, null, null						, null		, null, null, null},
-			{"testDever", "testCust", "1"	, "1"	, null		, null		, null, null						, null		, null, null, null},
-			{"testDever", "testCust", "1"	, "1"	, "1200"	, null		, null, null						, null		, null, null, null},
-			{"testDever", "testCust", "1"	, "1"	, null		, "updJobCd", null, null						, null		, null, null, null},
-			{"testDever", "testCust", "1"	, "1"	, null		, null		, "Y" , "20180520 081050.000000"	, null		, null, null, null},
-			{"testDever", "testCust", "1"	, "1"	, null		, null		, null, null						, "1111000"	, null, null, null},
-			{"testDever", "testCust", "1"	, "1"	, null		, null		, null, null						, null		, "03", null, null},
-			{"testDever", "testCust", "1"	, "1"	, null		, null		, null, null						, null		, null, "10", null},
-			{"testDever", "testCust", "1"	, "1"	, null		, null		, null, null						, null		, null, "10", "Y" }
+			{null		, null		, null	, null	, null		, null		, null, null						, null		, null, null, null, 0, 0, 0},
+			{"testDever", null		, null	, null	, null		, null		, null, null						, null		, null, null, null, 0, 0, 0},
+			{"testDever", "testCust", null	, null	, null		, null		, null, null						, null		, null, null, null, 0, 0, 0},
+			{"testDever", "testCust", "1"	, null	, null		, null		, null, null						, null		, null, null, null, 0, 0, 0},
+			{"testDever", "testCust", "1"	, "1"	, null		, null		, null, null						, null		, null, null, null, 1, 1, 0},
+			{"testDever", "testCust", "1"	, "1"	, "1200"	, null		, null, null						, null		, null, null, null, 1, 1, 1},
+			{"testDever", "testCust", "1"	, "1"	, null		, "updJobCd", null, null						, null		, null, null, null, 1, 1, 1},
+			{"testDever", "testCust", "1"	, "1"	, null		, null		, "Y" , "20180520 081050.000000"	, null		, null, null, null, 1, 0, 0},
+			{"testDever", "testCust", "1"	, "1"	, null		, null		, null, null						, "1111000"	, null, null, null, 1, 1, 1},
+			{"testDever", "testCust", "1"	, "1"	, null		, null		, null, null						, null		, "03", null, null, 1, 1, 1},
+			{"testDever", "testCust", "1"	, "1"	, null		, null		, null, null						, null		, null, "10", null, 1, 1, 1},
+			{"testDever", "testCust", "1"	, "1"	, null		, null		, null, null						, null		, null, null, "Y" , 0, 0, 0}
 		});
 	}
 	
@@ -59,6 +59,10 @@ public class Test1230_updJobSch {
 	@Parameter(9)	public String	ST_MTH		;
 	@Parameter(10)	public String	ED_MTH		;
 	@Parameter(11)	public String	DEL_YN		;
+	@Parameter(12)	public int		dataChkCnt	;
+	@Parameter(13)	public int		jobChkCnt	;
+	@Parameter(14)	public int		updCnt		;
+	
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
 	
@@ -96,9 +100,9 @@ public class Test1230_updJobSch {
 		req.setParameter("DEL_YN"		, DEL_YN		);
 		model.addAttribute("req", req);
 		
-		doReturn(1).when(alarmDao).updJobSch(any(JobSchInfoDto.class));
-		doReturn(1).when(alarmDao).srchDataChgYn(any(JobSchInfoDto.class));
-		doReturn(1).when(alarmDao).srchJobChkYn(any(JobSchInfoDto.class));
+		doReturn(updCnt).when(alarmDao).updJobSch(any(JobSchInfoDto.class));
+		doReturn(dataChkCnt).when(alarmDao).srchDataChgYn(any(JobSchInfoDto.class));
+		doReturn(jobChkCnt).when(alarmDao).srchJobChkYn(any(JobSchInfoDto.class));
 		
 		if(Utlz.isNull(DEVER_ID)) { 
 			thrown.expect(AlarmException.class);
@@ -106,12 +110,12 @@ public class Test1230_updJobSch {
 		} else if(Utlz.isNull(CUST_ID)) {
 			thrown.expect(AlarmException.class);
 			thrown.expectMessage("고객ID는 필수입력항목입니다.");
-		} else if(Utlz.isNull(SQNO)) {
+		} else if(!Utlz.isNum(SQNO)) {
 			thrown.expect(AlarmException.class);
-			thrown.expectMessage("일련번호는 필수입력항목입니다.");
-		} else if(Utlz.isNull(LUPD_CNT)) {
+			thrown.expectMessage("일련번호는 숫자여야 합니다.");
+		} else if(!Utlz.isNum(LUPD_CNT)) {
 			thrown.expect(AlarmException.class);
-			thrown.expectMessage("최종수정수는 필수입력항목입니다.");
+			thrown.expectMessage("최종수정수는 숫자여야 합니다.");
 		} else if(Utlz.isNull(SET_TM	)
 				&&Utlz.isNull(JOB_CD	)
 				&&Utlz.isNull(CHK_YN	)
@@ -122,6 +126,12 @@ public class Test1230_updJobSch {
 				&&Utlz.isNull(DEL_YN	)) {
 			thrown.expect(AlarmException.class);
 			thrown.expectMessage("수정할 정보가 없습니다.");
+		} else if(dataChkCnt == 0) {
+			thrown.expect(AlarmException.class);
+			thrown.expectMessage("조회후 데이터가 변경되었습니다. 재 조회 하십시오.");
+		} else if(jobChkCnt == 0) {
+			thrown.expect(AlarmException.class);
+			thrown.expectMessage("일정확인이 완료된 건은 변경/삭제가 불가능합니다.");
 		}
 		service.updJobSch(model);
 		int updCnt = (int) model.get("updCnt");
