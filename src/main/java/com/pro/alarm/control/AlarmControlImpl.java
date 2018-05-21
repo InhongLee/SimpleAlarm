@@ -25,10 +25,10 @@ public class AlarmControlImpl implements AlarmControl{
 	@GetMapping(value="home")
 	public String home(HttpServletRequest req, Locale locale, Model model) throws Exception {
 		log.info("Welcome home! The client locale is {}.", locale);
-		String apiUser = req.getParameter("apiUser");
-		String appUser = req.getParameter("appUser");
-		model.addAttribute("apiUser", apiUser);
-		model.addAttribute("appUser", appUser);
+		String DEVER_ID = req.getParameter("DEVER_ID");
+		String CUST_ID = req.getParameter("CUST_ID");
+		model.addAttribute("DEVER_ID", DEVER_ID);
+		model.addAttribute("CUST_ID", CUST_ID);
 		return "home";
 	}
 

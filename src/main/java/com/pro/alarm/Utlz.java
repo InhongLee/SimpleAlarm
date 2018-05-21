@@ -106,13 +106,15 @@ public class Utlz {
 	/**
 	 * 문자열이 숫자(정수, 실수)인지 아닌지 판별한다.
 	 * @param strNum
-	 * @return true:숫자 false:문자열
+	 * @return true:숫자 false:문자열 or null
 	 * @throws Exception
 	 */
 	public static boolean isNum(String strNum) throws Exception {
 		char tempCh;
 		int dotCount = 0; //실수일 경우 .의 개수를 체크하는 변수
 		boolean result = true;
+		
+		if(Utlz.isNull(strNum)) return false;
 		
 		for(int i=0; i<strNum.length(); i++) {
 			tempCh = strNum.charAt(i); //입력받은 문자열을 문자단위로 검사
