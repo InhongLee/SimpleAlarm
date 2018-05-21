@@ -46,7 +46,8 @@ public class TestAlarmDao {
 		this.dto.setCUST_ID	("testCust"		);
 		this.dto.setSET_TM	("00010101 0101");
 		this.dto.setJOB_CD	("testJobCd"	);
-		alarmDao.insJobSch(this.dto);
+		this.dto.setLUPD_CNT(1 				);		
+		alarmDao.ins_job_sch(this.dto);
 	}
 	
 	@Test

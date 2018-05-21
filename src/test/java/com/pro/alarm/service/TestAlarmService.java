@@ -1,14 +1,8 @@
-package com.pro.alarm;
+package com.pro.alarm.service;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
-
-import com.pro.alarm.service.Test1200_srchJobSch;
-import com.pro.alarm.service.Test1210_srchJobSch_orderBy;
-import com.pro.alarm.service.Test1220_insJobSch;
-import com.pro.alarm.service.Test1230_updJobSch;
-import com.pro.alarm.service.Test1240_delJobSch;
 
 @RunWith(Suite.class)
 @SuiteClasses(

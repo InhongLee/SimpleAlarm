@@ -29,15 +29,9 @@ public class AlarmServiceImpl extends Utlz implements AlarmService{
 		HttpServletRequest req = (HttpServletRequest) map.get("req");
 		Map<String, Object> daoMap = new HashMap<>();
 		
-		//입력값 검증
-		//1.DEVER_ID 필수입력
-		String deverId = req.getParameter("DEVER_ID");
-		if(Utlz.isNull(deverId)) {
-			throw new AlarmException("개발자ID는 필수입력항목입니다.");
-		}
-		//2.STDT~EDDT가 한달이내의 값 체크
-		if(Utlz.isNull(req.getParameter("STDT"))) throw new AlarmException("조회시작일자는 필수입력사항입니다.");
-		if(Utlz.isNull(req.getParameter("EDDT"))) throw new AlarmException("조회종료일자는 필수입력사항입니다.");
+		if(Utlz.isNull	(req.getParameter("DEVER_ID"))) throw new AlarmException("개발자ID는 필수입력항목입니다.");
+		if(Utlz.isNull	(req.getParameter("STDT"	))) throw new AlarmException("조회시작일자는 필수입력사항입니다.");
+		if(Utlz.isNull	(req.getParameter("EDDT"	))) throw new AlarmException("조회종료일자는 필수입력사항입니다.");
 		if(Utlz.diffDate(req.getParameter("STDT"), req.getParameter("EDDT")) > 31) {
 			throw new AlarmException("조회기간는 한달이내로 선택하셔야 합니다.");
 		}
