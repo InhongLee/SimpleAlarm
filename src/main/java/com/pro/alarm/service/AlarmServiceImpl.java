@@ -61,8 +61,6 @@ public class AlarmServiceImpl extends Utlz implements AlarmService{
 				daoMap.put("ORDERBY_COL"	, req.getParameter("ORDERBY_COL"	));
 			}
 		}
-		System.out.println(daoMap.toString());
-		System.out.println(alarmDao.srchJobSchLst(daoMap).toString());
 		//Execution			
 		jobScheduleDtos = alarmDao.srchJobSchLst(daoMap);
 		//조회결과 후처리
