@@ -56,5 +56,12 @@ public class AlarmControlImpl implements AlarmControl{
 		alarmService.insJobSch(model);
 		return "mngAlarm";
 	}
+
+	@Override
+	@GetMapping(value=F1200_MNG_JOB_SCH)
+	public String f1200_mngJobsch(HttpServletRequest req, Model model) throws Exception {
+		log.info(".....f1200_mngJobSch");
+		return F1200_MNG_JOB_SCH;
+	}
 	
 }
