@@ -138,8 +138,7 @@ function fn_validation() {
 	if($('#header_deverId'	).val() == '')	{alert("개발자ID는 필수입력항목입니다."	); return false;}
 	if($('#header_stdt'		).val() == '') 	{alert("조회시작일은 필수입력항목입니다."	); return false;}
 	if($('#header_eddt'		).val() == '') 	{alert("조회종료일은 필수입력항목입니다."	); return false;}
-	/* if($('#header_custId'	).val() == '') 	{alert("사용자ID는 필수입력항목입니다."	); return false;}
-	if($('#header_jobCd'	).val() == '') 	{alert("작업내용은 필수입력항목입니다."	); return false;} */
+	if(gfn_diffDate($('#header_stdt').val(),$('#header_eddt').val()) > 31) {alert("검색기간은 1달 이내로 선택하세요."); return false;}
 	return true;
 }
 
