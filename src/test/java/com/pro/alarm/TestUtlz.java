@@ -1,6 +1,9 @@
 package com.pro.alarm;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 import org.apache.ibatis.type.TypeException;
 import org.junit.FixMethodOrder;
@@ -164,11 +167,24 @@ public class TestUtlz {
 	}
 	
 	@Test
-	public void test0018_calDate() throws Exception {
+	public void test0020_calDate() throws Exception {
 		String date = "20180513";
 		int diff = -30;
 		String rsltDate = Utlz.calDate(date, diff);
 		assertEquals(".....Utlz.calDate():계산일자 오류", "20180413", rsltDate);
 	}
 
+	@Test
+	public void test0021_isDate_regSafe() throws Exception {
+		String date1 = "2018-05-01";
+		String date2 = "2018.05.01";
+		String date3 = "2018 05 01";
+		
+		Boolean chkDate1 = Utlz.isDate(date1);
+		Boolean chkDate2 = Utlz.isDate(date2);
+		Boolean chkDate3 = Utlz.isDate(date3);
+		assertThat(chkDate1, is(equalTo(true)));
+		assertThat(chkDate2, is(equalTo(true)));
+		assertThat(chkDate3, is(equalTo(true)));
+	}
 }

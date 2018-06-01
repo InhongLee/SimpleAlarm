@@ -17,7 +17,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.ui.ExtendedModelMap;
 
 import com.pro.alarm.control.AlarmControl;
@@ -36,14 +35,14 @@ public class Test0200_mngAlarmPost {
 	public AlarmControl control;
 	
 	private MockHttpServletRequest req;
-	private MockHttpServletResponse res;
+	//private MockHttpServletResponse res;
 	private ExtendedModelMap model;
 	
 	
 	@Before
 	public void setUp() {
 		req = new MockHttpServletRequest();
-		res = new MockHttpServletResponse();
+		//res = new MockHttpServletResponse();
 		model = new ExtendedModelMap();
 		control = new AlarmControlImpl();
 	}

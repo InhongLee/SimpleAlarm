@@ -9,7 +9,8 @@ import org.junit.runners.Suite.SuiteClasses;
 	Test0100_tick.class,
 	Test0110_home.class,
 	Test0200_mngAlarmPost.class,
-	Test0210_mngAlarm.class
+	Test0210_mngAlarm.class,
+	TestMSS010_00S.class
 })
 public class TestAlarmController {
 }

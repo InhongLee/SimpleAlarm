@@ -22,7 +22,6 @@ import org.junit.runners.Parameterized.Parameters;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.ui.ExtendedModelMap;
 
 import com.pro.alarm.dao.AlarmDao;
@@ -33,7 +32,7 @@ import com.pro.alarm.dto.JobSchInfoDto;
  *
  */
 @RunWith(Parameterized.class)
-public class Test1210_srchJobSch_orderBy {
+public class Test1210R_srchJobSch_orderBy {
 
 	@Parameters
 	public static Collection<Object[]> data() {
@@ -60,29 +59,29 @@ public class Test1210_srchJobSch_orderBy {
 	private AlarmDao alarmDao;
 	
 	@InjectMocks
-	private AlarmService service;
+	private RestServiceImpl service;
 	
-	private MockHttpServletRequest req;
+	private Map<String,Object> req;
 	//private MockHttpServletResponse res;
 	private ExtendedModelMap model;
 	
 	@Before
 	public void setUp() throws Exception {
-		service = new AlarmServiceImpl();
-		req = new MockHttpServletRequest();
+		service = new RestServiceImpl();
+		req = new HashMap<>();
 		model = new ExtendedModelMap();
-		req.setParameter("DEVER_ID", "testDever");
-		req.setParameter("STDT", "20180501");
-		req.setParameter("EDDT", "20180520");
-		req.setParameter("DELAY_CHK", "N");
+		req.put("DEVER_ID", "testDever");
+		req.put("STDT", "20180501");
+		req.put("EDDT", "20180520");
+		req.put("DELAY_CHK", "N");
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Test
 	public void test1205_srchJobSch_orderByCustId() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		req.setParameter("ORDERBY_TYPE", orderByType);
-		req.setParameter("ORDERBY_COL", orderByCol);
+		req.put("ORDERBY_TYPE", orderByType);
+		req.put("ORDERBY_COL", orderByCol);
 		model.addAttribute("req", req);
 		//기대정의
 		JobSchInfoDto dto = new JobSchInfoDto();
@@ -98,8 +97,8 @@ public class Test1210_srchJobSch_orderBy {
 		Map<String, Object> daoMap = new HashMap<>();
 		daoMap = (Map<String, Object>) model.get("daoMap");
 		assertEquals("조회를 실패하였습니다.", 1, jobScheduleDtos.size());
-		assertEquals("정렬조건이 선택되었으나 반영에 실패하였습니다.", orderByType, daoMap.get("ORDERBY_TYPE"));
-		assertEquals("정렬필드가 선택되었으나 반영에 실패하였습니다.", orderByCol, daoMap.get("ORDERBY_COL"));
+		assertEquals("정렬조건이 선택되었으나 반영에 실패하였습니다.", orderByType, daoMap.get("orderby_type"));
+		assertEquals("정렬필드가 선택되었으나 반영에 실패하였습니다.", orderByCol, daoMap.get("orderby_col"));
 	}
 
 }

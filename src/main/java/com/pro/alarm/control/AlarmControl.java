@@ -26,5 +26,6 @@ public interface AlarmControl extends AlarmCode {
 	 * @return
 	 * @throws Exception
 	 */
-	public String f1200_mngJobsch(HttpServletRequest req, Model model) throws Exception;
+	public String MSS010_00M(HttpServletRequest req, Model model) throws Exception;
+	
 }

@@ -3,6 +3,8 @@ package com.pro.alarm;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.ibatis.type.TypeException;
 import org.slf4j.Logger;
@@ -56,6 +58,7 @@ public class Utlz {
 
 	public static boolean isDate(String date) throws Exception {
 		if(Utlz.isNull(date)) throw new AlarmException("일자가 입력되지 않았습니다.");
+		date = date.replaceAll("[^0-9]", "");
 		boolean rslt = false;
 		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
 		Date minDate = new Date(0L);

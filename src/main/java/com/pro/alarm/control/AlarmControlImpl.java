@@ -58,10 +58,10 @@ public class AlarmControlImpl implements AlarmControl{
 	}
 
 	@Override
-	@GetMapping(value=F1200_MNG_JOB_SCH)
-	public String f1200_mngJobsch(HttpServletRequest req, Model model) throws Exception {
-		log.info(".....f1200_mngJobSch");
-		return F1200_MNG_JOB_SCH;
+	@GetMapping(value=MSS010_00M)
+	public String MSS010_00M(HttpServletRequest req, Model model) throws Exception {
+		log.info(".....MSS010_00M");
+		return MSS010_00M;
 	}
 	
 }

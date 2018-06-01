@@ -93,8 +93,8 @@ public class Test1200_srchJobSch {
 		model.addAttribute("req", req);
 		//기대정의
 		JobSchInfoDto dto = new JobSchInfoDto();
-		dto.setDEVER_ID("testDever");
-		dto.setCUST_ID("testCust");
+		dto.setDever_id("testDever");
+		dto.setCust_id("testCust");
 		List<JobSchInfoDto> dtos = new ArrayList<JobSchInfoDto>();
 		dtos.add(dto);
 		doReturn(dtos).when(alarmDao).srchJobSchLst(anyMap());
@@ -113,8 +113,8 @@ public class Test1200_srchJobSch {
 		model.addAttribute("req", req);
 		//기대정의
 		JobSchInfoDto dto = new JobSchInfoDto();
-		dto.setDEVER_ID("testDever");
-		dto.setCUST_ID("testCust");
+		dto.setDever_id("testDever");
+		dto.setCust_id("testCust");
 		List<JobSchInfoDto> dtos = new ArrayList<JobSchInfoDto>();
 		dtos.add(dto);
 		doReturn(dtos).when(alarmDao).srchJobSchLst(anyMap());
@@ -132,7 +132,7 @@ public class Test1200_srchJobSch {
 	//조회조건 cust_id, job_cd 포함할 경우
 	@SuppressWarnings("unchecked")
 	@Test
-	public void test1215_srchJobSch_srchFiler() throws Exception {
+	public void test1215_srchJobSch_srchFilter() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		req.setParameter("CUST_ID", "testCust");
 		req.removeParameter("DELAY_CHK");
@@ -140,8 +140,8 @@ public class Test1200_srchJobSch {
 		model.addAttribute("req", req);
 		//기대정의
 		JobSchInfoDto dto = new JobSchInfoDto();
-		dto.setDEVER_ID("testDever");
-		dto.setCUST_ID("testCust");
+		dto.setDever_id("testDever");
+		dto.setCust_id("testCust");
 		List<JobSchInfoDto> dtos = new ArrayList<JobSchInfoDto>();
 		dtos.add(dto);
 		doReturn(dtos).when(alarmDao).srchJobSchLst(anyMap());

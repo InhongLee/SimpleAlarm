@@ -42,11 +42,11 @@ public class TestAlarmDao {
 	public void beforeTransaction() throws Exception {
 		this.dto = new JobSchInfoDto();
 		//insert
-		this.dto.setDEVER_ID("testDever"	);
-		this.dto.setCUST_ID	("testCust"		);
-		this.dto.setSET_TM	("00010101 0101");
-		this.dto.setJOB_CD	("testJobCd"	);
-		this.dto.setLUPD_CNT(1 				);		
+		this.dto.setDever_id("testDever"	);
+		this.dto.setCust_id	("testCust"		);
+		this.dto.setSet_tm	("00010101 0101");
+		this.dto.setJob_cd	("testJobCd"	);
+		this.dto.setLupd_cnt(1 				);		
 		alarmDao.ins_job_sch(this.dto);
 	}
 	
@@ -54,14 +54,14 @@ public class TestAlarmDao {
 	public void TEST1000_CRUD_JOB_SCH() throws Exception {
 		JobSchInfoDto dto = new JobSchInfoDto();
 		//insert
-		dto.setDEVER_ID	("amaco78"		);
-		dto.setCUST_ID	("aaa999"		);
-		dto.setSET_TM	("00010101 1300");
-		dto.setJOB_CD	("testJobCd"	);
+		dto.setDever_id	("amaco78"		);
+		dto.setCust_id	("aaa999"		);
+		dto.setSet_tm	("00010101 1300");
+		dto.setJob_cd	("testJobCd"	);
 		assertEquals(".....Table JOB_SCH insert error occured.", 1, alarmDao.insJobSch(dto));
 		//select
 		List<JobSchInfoDto> jobScheduleDtos = new ArrayList<>();
-		dto.setLUPD_CNT(1);
+		dto.setLupd_cnt(1);
 		jobScheduleDtos = alarmDao.select_job_sch(dto);
 		int selectCnt = jobScheduleDtos.size();
 		assertEquals(".....Table JOB_SCH select error occured.", 1, selectCnt);
@@ -77,7 +77,7 @@ public class TestAlarmDao {
 	public void test1001_srchDataChgYnN() throws Exception {
 		//select
 		List<JobSchInfoDto> jobScheduleDtos = new ArrayList<>();
-		this.dto.setLUPD_CNT(1);
+		this.dto.setLupd_cnt(1);
 		jobScheduleDtos = alarmDao.select_job_sch(this.dto);
 		//srchDataChgYn
 		int srchCntY = alarmDao.srchDataChgYn(jobScheduleDtos.get(0));
@@ -89,12 +89,12 @@ public class TestAlarmDao {
 	public void test1002_srchDataChgYnY() throws Exception {
 		//select
 		List<JobSchInfoDto> jobScheduleDtos = new ArrayList<>();
-		this.dto.setLUPD_CNT(1);
+		this.dto.setLupd_cnt(1);
 		jobScheduleDtos = alarmDao.select_job_sch(this.dto);
 		//update
-		this.dto.setDEL_YN("Y");
+		this.dto.setDel_yn("Y");
 		alarmDao.updJobSch(dto);
-		this.dto.setLUPD_CNT(jobScheduleDtos.get(0).getLUPD_CNT()+1);
+		this.dto.setLupd_cnt(jobScheduleDtos.get(0).getLupd_cnt()+1);
 		alarmDao.updJobSch(this.dto);
 		//srchDataChgYn
 		int srchCntN = alarmDao.srchDataChgYn(jobScheduleDtos.get(0));
@@ -111,7 +111,7 @@ public class TestAlarmDao {
 	
 	@Test
 	public void test1004_srchJobChkYnY() throws Exception {
-		this.dto.setCHK_YN("Y");
+		this.dto.setChk_yn("Y");
 		alarmDao.updJobSch(this.dto);
 		int srchCnt = alarmDao.srchJobChkYn(this.dto);
 		assertEquals("■■■■■ 일정테이블 일정확인여부 체크로직[TS001/srchJobChkYn] case:일정확인시.....test failed",0,srchCnt);
@@ -122,8 +122,8 @@ public class TestAlarmDao {
 	public void test1101_srchJobSchLst() throws Exception {
 		List<JobSchInfoDto> jobScheduleDtos = new ArrayList<>();
 		Map<String, Object> daoMap = new HashMap<>();
-		daoMap.put("DEVER_ID", "testDever");
-		daoMap.put("CUST_ID", "testCust");
+		daoMap.put("dever_id", "testDever");
+		daoMap.put("cust_id", "testCust");
 		jobScheduleDtos = alarmDao.srchJobSchLst(daoMap);
 		int srchCnt = jobScheduleDtos.size();
 		assertNotEquals("■■■■■ 일정테이블 조회로직[TS001/srchJobSchLst] ..... failed",0,srchCnt);
@@ -132,7 +132,7 @@ public class TestAlarmDao {
 	
 	@AfterTransaction
 	public void afterTransaction() throws Exception {
-		this.dto.setLUPD_CNT(1);
+		this.dto.setLupd_cnt(1);
 		alarmDao.delJobSch(this.dto);
 	}
 }

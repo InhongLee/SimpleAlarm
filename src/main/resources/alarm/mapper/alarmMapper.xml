@@ -22,29 +22,29 @@
 				, LUPD_CNT	   												/*최종수정수 */
 		FROM	TS001_JOB_SCH
 		<where>
-			<if test="DEVER_ID != null"		>DEVER_ID 		= #{DEVER_ID}</if>
-			<if test="CUST_ID != null"		>AND CUST_ID 	= #{CUST_ID}</if>
-			<if test="SQNO != null"			>AND SQNO 		= #{SQNO}</if>
-			<if test="SET_TM != null"		>AND SET_TM 	= TO_TIMESTAMP(#{SET_TM},'YYYYMMDD HH24MI')</if>
-			<if test="JOB_CD != null"		>AND JOB_CD 	= #{JOB_CD}</if>
-			<if test="CHK_YN != null"		>AND CHK_YN 	= #{CHK_YN}</if>
-			<if test="LST_CHK_TS != null"	>AND LST_CHK_TS = TO_TIMESTAMP(#{LST_CHK_TS},'YYYYMMDD HH24MISS.FF6')</if>
-			<if test="WK_ITV_RULE != null"	>AND WK_ITV_RULE= #{WK_ITV_RULE}</if>
-			<if test="ST_MTH != null"		>AND ST_MTH 	= #{ST_MTH}</if>
-			<if test="ED_MTH != null"		>AND ED_MTH 	= #{ED_MTH}</if>
-			<if test="DEL_YN != null"		>AND DEL_YN 	= #{DEL_YN}</if>
-			<if test="PC_TS != null"		>AND PC_TS 		= TO_TIMESTAMP(#{PC_TS},'YYYYMMDD HH24MISS.FF6')</if>
-			<if test="FST_PC_TS != null"	>AND FST_PC_TS 	= TO_TIMESTAMP(#{FST_PC_TS},'YYYYMMDD HH24MISS.FF6')</if>
-			<if test="LUPD_CNT != null"		>AND LUPD_CNT 	= #{LUPD_CNT}</if>
+			<if test="dever_id != null"		>DEVER_ID 		= #{dever_id}</if>
+			<if test="cust_id != null"		>AND CUST_ID 	= #{cust_id}</if>
+			<if test="sqno != null"			>AND SQNO 		= #{sqno}</if>
+			<if test="set_tm != null"		>AND SET_TM 	= TO_TIMESTAMP(#{set_tm},'YYYYMMDD HH24MI')</if>
+			<if test="job_cd != null"		>AND JOB_CD 	= #{job_cd}</if>
+			<if test="chk_yn != null"		>AND CHK_YN 	= #{chk_yn}</if>
+			<if test="lst_chk_ts != null"	>AND LST_CHK_TS = TO_TIMESTAMP(#{lst_chk_ts},'YYYYMMDD HH24MISS.FF6')</if>
+			<if test="wk_itv_rule != null"	>AND WK_ITV_RULE= #{wk_itv_rule}</if>
+			<if test="st_mth != null"		>AND ST_MTH 	= #{st_mth}</if>
+			<if test="ed_mth != null"		>AND ED_MTH 	= #{ed_mth}</if>
+			<if test="del_yn != null"		>AND DEL_YN 	= #{del_yn}</if>
+			<if test="pc_ts != null"		>AND PC_TS 		= TO_TIMESTAMP(#{pc_ts},'YYYYMMDD HH24MISS.FF6')</if>
+			<if test="fst_pc_ts != null"	>AND FST_PC_TS 	= TO_TIMESTAMP(#{fst_pc_ts},'YYYYMMDD HH24MISS.FF6')</if>
+			<if test="lupd_cnt != null"		>AND LUPD_CNT 	= #{lupd_cnt}</if>
 		</where>
 	</select>
 	
 	<insert id="ins_job_sch" parameterType="JobSchInfoDto">
-		<selectKey keyProperty="SQNO" resultType="int" order="BEFORE">
+		<selectKey keyProperty="sqno" resultType="int" order="BEFORE">
 		SELECT 	NVL(MAX(SQNO),0) + 1 AS SQNO 
 		FROM 	TS001_JOB_SCH 
-		WHERE 	DEVER_ID	= #{DEVER_ID}
-		AND		CUST_ID		= #{CUST_ID}
+		WHERE 	DEVER_ID	= #{dever_id}
+		AND		CUST_ID		= #{cust_id}
 		</selectKey>
 		INSERT INTO	TS001_JOB_SCH(
 							  DEVER_ID 	   /*개발자ID	*/
@@ -52,40 +52,40 @@
 							, SQNO		   /*일련번호  */
 							, SET_TM	   /*설정시간  */
 							, JOB_CD	   /*작업코드  */
-							<if test="CHK_YN != null"		>, CHK_YN	   /*확인여부  */</if>
-							<if test="LST_CHK_TS != null"	>, LST_CHK_TS   /*최종확인일시*/</if>
-							<if test="WK_ITV_RULE != null"	>, WK_ITV_RULE  /*주간규칙*/</if>
-							<if test="ST_MTH != null"		>, ST_MTH       /*시작월*/</if>
-							<if test="ED_MTH != null"		>, ED_MTH       /*종료월*/</if>
-							<if test="DEL_YN != null"		>, DEL_YN	   /*삭제여부  */</if>
-							<if test="PC_TS != null"		>, PC_TS		   /*처리일시  */</if>
-							<if test="FST_PC_TS != null"	>, FST_PC_TS	   /*최초처리일시*/</if>
-							<if test="LUPD_CNT != null"		>, LUPD_CNT	   /*최종수정수 */</if>
+							<if test="chk_yn != null"		>, CHK_YN	   /*확인여부  */</if>
+							<if test="lst_chk_ts != null"	>, LST_CHK_TS   /*최종확인일시*/</if>
+							<if test="wk_itv_rule != null"	>, WK_ITV_RULE  /*주간규칙*/</if>
+							<if test="st_mth != null"		>, ST_MTH       /*시작월*/</if>
+							<if test="ed_mth != null"		>, ED_MTH       /*종료월*/</if>
+							<if test="del_yn != null"		>, DEL_YN	   /*삭제여부  */</if>
+							<if test="pc_ts != null"		>, PC_TS		   /*처리일시  */</if>
+							<if test="fst_pc_ts != null"	>, FST_PC_TS	   /*최초처리일시*/</if>
+							<if test="lupd_cnt != null"		>, LUPD_CNT	   /*최종수정수 */</if>
 							)
 					VALUES(
-							  #{DEVER_ID}
-							, #{CUST_ID}
-							, #{SQNO}
-							, TO_TIMESTAMP(#{SET_TM},'YYYYMMDD HH24MI')
-							, #{JOB_CD}
-							<if test="CHK_YN != null"		>, #{CHK_YN}</if>
-							<if test="LST_CHK_TS != null"	>, #{LST_CHK_TS}</if>
-							<if test="WK_ITV_RULE != null"	>, #{WK_ITV_RULE}</if>
-							<if test="ST_MTH != null"		>, #{ST_MTH}</if>
-							<if test="ED_MTH != null"		>, #{ED_MTH}</if>
-							<if test="DEL_YN != null"		>, #{DEL_YN}</if>
-							<if test="PC_TS != null"		>, #{PC_TS}</if>
-							<if test="FST_PC_TS != null"	>, #{FST_PC_TS}</if>
-							<if test="LUPD_CNT != null"		>, #{LUPD_CNT}</if>
+							  #{dever_id}
+							, #{cust_id}
+							, #{sqno}
+							, TO_TIMESTAMP(#{set_tm},'YYYYMMDD HH24MI')
+							, #{job_cd}
+							<if test="chk_yn != null"		>, #{chk_yn}</if>
+							<if test="lst_chk_ts != null"	>, #{lst_chk_ts}</if>
+							<if test="wk_itv_rule != null"	>, #{wk_itv_rule}</if>
+							<if test="st_mth != null"		>, #{st_mth}</if>
+							<if test="ed_mth != null"		>, #{ed_mth}</if>
+							<if test="del_yn != null"		>, #{del_yn}</if>
+							<if test="pc_ts != null"		>, #{pc_ts}</if>
+							<if test="fst_pc_ts != null"	>, #{fst_pc_ts}</if>
+							<if test="lupd_cnt != null"		>, #{lupd_cnt}</if>
 							)
 	</insert>
 	
 	<insert id="insJobSch" parameterType="JobSchInfoDto">
-		<selectKey keyProperty="SQNO" resultType="int" order="BEFORE">
+		<selectKey keyProperty="sqno" resultType="int" order="BEFORE">
 		SELECT 	NVL(MAX(SQNO),0) + 1 AS SQNO 
 		FROM 	TS001_JOB_SCH 
-		WHERE 	DEVER_ID	= #{DEVER_ID}
-		AND		CUST_ID		= #{CUST_ID}
+		WHERE 	DEVER_ID	= #{dever_id}
+		AND		CUST_ID		= #{cust_id}
 		</selectKey>
 		INSERT INTO	TS001_JOB_SCH(
 							  DEVER_ID 	   /*개발자ID	*/
@@ -95,25 +95,25 @@
 							, JOB_CD	   /*작업코드  */
 							, CHK_YN	   /*확인여부  */
 							, LST_CHK_TS   /*최종확인일시*/
-							<if test="WK_ITV_RULE != null">, WK_ITV_RULE  /*주간규칙*/</if>
-							<if test="ST_MTH != null">, ST_MTH       /*시작월*/</if>
-							<if test="ED_MTH != null">, ED_MTH       /*종료월*/</if>
+							<if test="wk_itv_rule != null">, WK_ITV_RULE  /*주간규칙*/</if>
+							<if test="st_mth != null">, ST_MTH       /*시작월*/</if>
+							<if test="ed_mth != null">, ED_MTH       /*종료월*/</if>
 							, DEL_YN	   /*삭제여부  */
 							, PC_TS		   /*처리일시  */
 							, FST_PC_TS	   /*최초처리일시*/
 							, LUPD_CNT	   /*최종수정수 */
 							)
 					VALUES(
-							  #{DEVER_ID}
-							, #{CUST_ID}
-							, #{SQNO}
-							, TO_TIMESTAMP(#{SET_TM},'YYYYMMDD HH24MI')
-							, #{JOB_CD}
+							  #{dever_id}
+							, #{cust_id}
+							, #{sqno}
+							, TO_TIMESTAMP(#{set_tm},'YYYYMMDD HH24MI')
+							, #{job_cd}
 							, 'N'
 							, TO_TIMESTAMP('00010101 000000.000000','YYYYMMDD HH24MISS.FF6')
-							<if test="WK_ITV_RULE != null">, #{WK_ITV_RULE}</if>
-							<if test="ST_MTH != null">, #{ST_MTH}</if>
-							<if test="ED_MTH != null">, #{ED_MTH}</if>
+							<if test="wk_itv_rule != null">, #{wk_itv_rule}</if>
+							<if test="st_mth != null">, #{st_mth}</if>
+							<if test="ed_mth != null">, #{ed_mth}</if>
 							, 'N'
 							, SYSTIMESTAMP
 							, SYSTIMESTAMP
@@ -124,51 +124,51 @@
 	<update id="updJobSch" parameterType="JobSchInfoDto">
 		UPDATE	TS001_JOB_SCH
 		<set>
-			<if test="SET_TM != null"		>SET_TM 		= TO_TIMESTAMP(#{SET_TM},'YYYYMMDD HH24MI')</if>
-			<if test="JOB_CD != null"		>,JOB_CD 		= #{JOB_CD}</if>
-			<if test="CHK_YN != null"		>,CHK_YN 		= #{CHK_YN}</if>
-			<if test="LST_CHK_TS != null"	>,LST_CHK_TS 	= TO_TIMESTAMP(#{LST_CHK_TS},'YYYYMMDD HH24MISS.FF6')</if>
-			<if test="WK_ITV_RULE != null"	>,WK_ITV_RULE	= #{WK_ITV_RULE}</if>
-			<if test="ST_MTH != null"		>,ST_MTH			= #{ST_MTH}</if>
-			<if test="ED_MTH != null"		>,ED_MTH			= #{ED_MTH}</if>
-			<if test="DEL_YN != null"		>,DEL_YN 		= #{DEL_YN}</if>
+			<if test="set_tm != null"		>SET_TM 		= TO_TIMESTAMP(#{set_tm},'YYYYMMDD HH24MI')</if>
+			<if test="job_cd != null"		>,JOB_CD 		= #{job_cd}</if>
+			<if test="chk_yn != null"		>,CHK_YN 		= #{chk_yn}</if>
+			<if test="lst_chk_ts != null"	>,LST_CHK_TS 	= TO_TIMESTAMP(#{lst_chk_ts},'YYYYMMDD HH24MISS.FF6')</if>
+			<if test="wk_itv_rule != null"	>,WK_ITV_RULE	= #{wk_itv_rule}</if>
+			<if test="st_mth != null"		>,ST_MTH			= #{st_mth}</if>
+			<if test="ed_mth != null"		>,ED_MTH			= #{ed_mth}</if>
+			<if test="del_yn != null"		>,DEL_YN 		= #{del_yn}</if>
 			<if test="true"					>,PC_TS 			= SYSTIMESTAMP</if>
 			<if test="true"					>,LUPD_CNT 		= (SELECT NVL(MAX(LUPD_CNT),0) + 1 AS LUPD_CNT
 																FROM TS001_JOB_SCH 
-																WHERE   DEVER_ID    = #{DEVER_ID}
-																AND     CUST_ID     = #{CUST_ID}
-																AND     SQNO        = #{SQNO})</if>
+																WHERE   DEVER_ID    = #{dever_id}
+																AND     CUST_ID     = #{cust_id}
+																AND     SQNO        = #{sqno})</if>
 		</set>
-		WHERE   DEVER_ID    = #{DEVER_ID}
-		AND     CUST_ID     = #{CUST_ID}
-		AND     SQNO        = #{SQNO}
+		WHERE   DEVER_ID    = #{dever_id}
+		AND     CUST_ID     = #{cust_id}
+		AND     SQNO        = #{sqno}
 		AND		DEL_YN			= 'N'
 	</update>
 	
 	<delete id="delJobSch" parameterType="JobSchInfoDto">
 		DELETE 
 		FROM    TS001_JOB_SCH 
-		WHERE   DEVER_ID    = #{DEVER_ID}
-		AND     CUST_ID     = #{CUST_ID}
-		AND     SQNO        = #{SQNO}
+		WHERE   DEVER_ID    = #{dever_id}
+		AND     CUST_ID     = #{cust_id}
+		AND     SQNO        = #{sqno}
 	</delete>
 
 	<select id="srchDataChgYn" parameterType="JobSchInfoDto" resultType="int">
 		SELECT	COUNT(DEVER_ID)
 		FROM	TS001_JOB_SCH
-		WHERE	DEVER_ID 	= #{DEVER_ID}
-		AND		CUST_ID		= #{CUST_ID}
-		AND		SQNO		= #{SQNO}
-		AND		LUPD_CNT	= #{LUPD_CNT}
+		WHERE	DEVER_ID 	= #{dever_id}
+		AND		CUST_ID		= #{cust_id}
+		AND		SQNO		= #{sqno}
+		AND		LUPD_CNT	= #{lupd_cnt}
 		AND		DEL_YN		= 'N'
 	</select>
 	
 	<select id="srchJobChkYn" parameterType="JobSchInfoDto" resultType="int">
 		SELECT	COUNT(DEVER_ID)
 		FROM	TS001_JOB_SCH
-		WHERE	DEVER_ID 	= #{DEVER_ID}
-		AND		CUST_ID		= #{CUST_ID}
-		AND		SQNO		= #{SQNO}
+		WHERE	DEVER_ID 	= #{dever_id}
+		AND		CUST_ID		= #{cust_id}
+		AND		SQNO		= #{sqno}
 		AND		CHK_YN		= 'N'
 		AND		DEL_YN		= 'N'
 	</select>
@@ -189,28 +189,28 @@
 				, TO_CHAR(PC_TS,'YYYYMMDD HH24MISS.FF6') AS PC_TS			/*처리일시*/
 				, LUPD_CNT	   												/*최종수정수 */
 		FROM	TS001_JOB_SCH
-		WHERE	DEVER_ID 	= #{DEVER_ID}
-		<if test="CUST_ID != null">
-		AND		CUST_ID 	= #{CUST_ID}
+		WHERE	DEVER_ID 	= #{dever_id}
+		<if test="cust_id != null">
+		AND		CUST_ID 	= #{cust_id}
 		</if>
-		<if test="STDT != null and EDDT != null">
-		AND		PC_TS BETWEEN TO_TIMESTAMP(#{STDT},'YYYYMMDD') AND TO_TIMESTAMP(#{EDDT},'YYYYMMDD')
+		<if test="stdt != null and eddt != null">
+		AND		PC_TS BETWEEN TO_TIMESTAMP(Regexp_Replace(#{stdt},'[^0-9]',''),'YYYYMMDD') AND TO_TIMESTAMP(Regexp_Replace(#{eddt},'[^0-9]',''),'YYYYMMDD')
 		</if>
-		<if test='DELAY_CHK == "Y"'>
+		<if test='delay_chk == "Y"'>
 		AND		CHK_YN		= 'N'
 		AND		TO_CHAR(SET_TM,'HH24MISS') &lt; TO_CHAR(SYSTIMESTAMP,'HH24MISS')
 		AND		DEL_YN 		= 'N'
 		</if>
-		<if test="ORDERBY_COL != null and ORDERBY_TYPE != null">
+		<if test="orderby_col != null and orderby_type != null">
 		ORDER BY
 		<choose>
-			<when test="ORDERBY_COL == 'CUST_ID'">CUST_ID</when>
-			<when test="ORDERBY_COL == 'SET_TM'">SET_TM</when>
-			<when test="ORDERBY_COL == 'JOB_CD'">JOB_CD</when>
+			<when test="orderby_col == 'cust_id'">CUST_ID</when>
+			<when test="orderby_col == 'set_tm'">SET_TM</when>
+			<when test="orderby_col == 'job_cd'">JOB_CD</when>
 			<otherwise>CHK_YN</otherwise>
 		</choose>
 		<choose>
-			<when test="ORDERBY_TYPE == 'DESC'"> DESC</when>
+			<when test="orderby_type == 'desc'"> DESC</when>
 			<otherwise> ASC</otherwise>
 		</choose>
 		</if>

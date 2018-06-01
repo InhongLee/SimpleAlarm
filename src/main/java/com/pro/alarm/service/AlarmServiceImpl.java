@@ -26,7 +26,7 @@ public class AlarmServiceImpl extends Utlz implements AlarmService{
 	@Override
 	public void srchJobSch(Model model) throws Exception {
 		Map<String, Object> map = model.asMap();
-		HttpServletRequest req = (HttpServletRequest) map.get("req");
+			HttpServletRequest req = (HttpServletRequest) map.get("req");
 		Map<String, Object> daoMap = new HashMap<>();
 		
 		if(Utlz.isNull	(req.getParameter("DEVER_ID"))) throw new AlarmException("개발자ID는 필수입력항목입니다.");
@@ -78,11 +78,11 @@ public class AlarmServiceImpl extends Utlz implements AlarmService{
 		if(Utlz.isNull(req.getParameter("JOB_CD"	))) throw new AlarmException("작업코드는 필수입력항목입니다.");
 		
 		JobSchInfoDto dto = new JobSchInfoDto();
-		dto.setDEVER_ID(req.getParameter("DEVER_ID"));
-		dto.setCUST_ID(req.getParameter("CUST_ID"));
+		dto.setDever_id(req.getParameter("DEVER_ID"));
+		dto.setCust_id(req.getParameter("CUST_ID"));
 		String setTm = "00010101 " + req.getParameter("SET_TM").replace(":", "");
-		dto.setSET_TM(setTm);
-		dto.setJOB_CD(req.getParameter("JOB_CD"));
+		dto.setSet_tm(setTm);
+		dto.setJob_cd(req.getParameter("JOB_CD"));
 		
 		int insCnt = alarmDao.insJobSch(dto);
 		
@@ -112,18 +112,18 @@ public class AlarmServiceImpl extends Utlz implements AlarmService{
 		String	ST_MTH		= !Utlz.isNull(req.getParameter("ST_MTH"		)) ? req.getParameter("ST_MTH"		) : null;
 		String	ED_MTH		= !Utlz.isNull(req.getParameter("ED_MTH"		)) ? req.getParameter("ED_MTH"		) : null;
 		String	DEL_YN		= !Utlz.isNull(req.getParameter("DEL_YN"		)) ? req.getParameter("DEL_YN"		) : null;
-		dto.setDEVER_ID		(DEVER_ID	);
-		dto.setCUST_ID		(CUST_ID 	);
-		dto.setSQNO			(SQNO		);
-		dto.setLUPD_CNT		(LUPD_CNT	);
-		dto.setSET_TM		(SET_TM		);
-		dto.setJOB_CD		(JOB_CD		);
-		dto.setCHK_YN		(CHK_YN		);
-		dto.setLST_CHK_TS	(LST_CHK_TS	);
-		dto.setWK_ITV_RULE	(WK_ITV_RULE);
-		dto.setST_MTH		(ST_MTH		);
-		dto.setED_MTH		(ED_MTH		);
-		dto.setDEL_YN		(DEL_YN		);
+		dto.setDever_id		(DEVER_ID	);
+		dto.setCust_id		(CUST_ID 	);
+		dto.setSqno			(SQNO		);
+		dto.setLupd_cnt		(LUPD_CNT	);
+		dto.setSet_tm		(SET_TM		);
+		dto.setJob_cd		(JOB_CD		);
+		dto.setChk_yn		(CHK_YN		);
+		dto.setLst_chk_ts	(LST_CHK_TS	);
+		dto.setWk_itv_rule	(WK_ITV_RULE);
+		dto.setSt_mth		(ST_MTH		);
+		dto.setEd_mth		(ED_MTH		);
+		dto.setDel_yn		(DEL_YN		);
 		if(Utlz.isNull(SET_TM	)
 				&&Utlz.isNull(JOB_CD	)
 				&&Utlz.isNull(CHK_YN	)
@@ -156,10 +156,10 @@ public class AlarmServiceImpl extends Utlz implements AlarmService{
 		if(!Utlz.isNum(req.getParameter("SQNO"		))) throw new AlarmException("일련번호는 숫자여야 합니다."		);
 		
 		JobSchInfoDto dto = new JobSchInfoDto();
-		dto.setDEVER_ID(req.getParameter("DEVER_ID"));
-		dto.setCUST_ID(req.getParameter("CUST_ID"));
+		dto.setDever_id(req.getParameter("DEVER_ID"));
+		dto.setCust_id(req.getParameter("CUST_ID"));
 		int nSqno = Integer.valueOf(req.getParameter("SQNO"));
-		dto.setSQNO(nSqno);
+		dto.setSqno(nSqno);
 		
 		int delCnt = alarmDao.delJobSch(dto);
 		
