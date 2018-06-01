@@ -51,8 +51,4 @@
 			name="sqlSessionFactory" />
 	</bean>
 	
-	
-	<context:component-scan base-package="com.pro.alarm"></context:component-scan>
-	
-	
 </beans>
