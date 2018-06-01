@@ -35,7 +35,7 @@ public class RestServiceImpl {
 		if(Utlz.isNull	(req.get("DEVER_ID"))) throw new AlarmException("개발자ID는 필수입력항목입니다.");
 		if(!Utlz.isDate	(req.get("STDT"	).toString())) throw new AlarmException("조회시작일자는 필수입력사항입니다.");
 		if(!Utlz.isDate	(req.get("EDDT"	).toString())) throw new AlarmException("조회종료일자는 필수입력사항입니다.");
-		if(Utlz.diffDate(req.get("STDT").toString(), req.get("EDDT").toString()) > 31) {
+		if(Utlz.diffDate(Utlz.getDate(req.get("STDT").toString()), Utlz.getDate(req.get("EDDT").toString())) > 31) {
 			throw new AlarmException("조회기간는 한달이내로 선택하셔야 합니다.");
 		}
 		
