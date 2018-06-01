@@ -3,8 +3,6 @@ package com.pro.alarm;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.ibatis.type.TypeException;
 import org.slf4j.Logger;
@@ -18,6 +16,8 @@ public class Utlz {
 	 * 		Object[String,Number,Data]가 null이거나 ''값일 경우 true를 반환
 	 * isDate(String date)
 	 * 		입력받은 문자열이 Date로 변환 가능한지 체크하여 가능하면 true 불가능하면 false를 반환
+	 * getDate(Object date)
+	 * 		입력받은 문자열이 일자형태이면 string type 'YYYYMMDD'로 변경하여 반환
 	 * compareDate(String a,String b)
 	 * 		두 일자(String "20180412")를 비교하여 a>b 이면 1, a=b 이면 0, a<b 이면 -1을 반환
 	 * compareDttm(String a,String b)
@@ -56,6 +56,12 @@ public class Utlz {
 		return false;
 	}
 
+	/**
+	 * 입력받은 문자열이 Date로 변환 가능한지 체크하여 가능하면 true 불가능하면 false를 반환
+	 * @param date
+	 * @return
+	 * @throws Exception
+	 */
 	public static boolean isDate(String date) throws Exception {
 		if(Utlz.isNull(date)) throw new AlarmException("일자가 입력되지 않았습니다.");
 		date = date.replaceAll("[^0-9]", "");
@@ -66,6 +72,18 @@ public class Utlz {
 		String sMaxDate = "99991231";
 		if(Utlz.compareDate(date, sMinDate) > 0 && Utlz.compareDate(date, sMaxDate) < 0) rslt = true;
 		return rslt;
+	}
+	
+	/**
+	 * 입력받은 문자열이 일자형태이면 string type 'YYYYMMDD'로 변경하여 반환
+	 * @param date
+	 * @return
+	 * @throws Exception
+	 */
+	public static String getDate(String date) throws Exception {
+		if(!Utlz.isDate(date)) throw new AlarmException("");
+		date = date.replaceAll("[^0-9]", "");
+		return date;
 	}
 	
 	/**

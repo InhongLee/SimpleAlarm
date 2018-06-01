@@ -187,4 +187,17 @@ public class TestUtlz {
 		assertThat(chkDate2, is(equalTo(true)));
 		assertThat(chkDate3, is(equalTo(true)));
 	}
+	
+	@Test
+	public void test0022_getDate() throws Exception {
+		String date1 = "2018-05-01";
+		String date2 = "2018.05.01";
+		String date3 = "2018 05 01";
+		date1 = Utlz.getDate(date1);
+		date2 = Utlz.getDate(date2);
+		date3 = Utlz.getDate(date3);
+		assertThat(date1, is(equalTo("20180501")));
+		assertThat(date2, is(equalTo("20180501")));
+		assertThat(date3, is(equalTo("20180501")));
+	}
 }
