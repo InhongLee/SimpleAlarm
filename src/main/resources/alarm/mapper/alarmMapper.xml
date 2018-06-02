@@ -112,8 +112,8 @@
 							, 'N'
 							, TO_TIMESTAMP('00010101 000000.000000','YYYYMMDD HH24MISS.FF6')
 							<if test="wk_itv_rule != null">, #{wk_itv_rule}</if>
-							<if test="st_mth != null">, #{st_mth}</if>
-							<if test="ed_mth != null">, #{ed_mth}</if>
+							<if test="st_mth != null">, LPAD(#{st_mth},2,'0')</if>
+							<if test="ed_mth != null">, LPAD(#{ed_mth},2,'0')</if>
 							, 'N'
 							, SYSTIMESTAMP
 							, SYSTIMESTAMP
