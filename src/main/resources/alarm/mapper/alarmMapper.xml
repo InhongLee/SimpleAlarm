@@ -196,6 +196,9 @@
 		<if test="stdt != null and eddt != null">
 		AND		PC_TS BETWEEN TO_TIMESTAMP(Regexp_Replace(#{stdt},'[^0-9]',''),'YYYYMMDD') AND TO_TIMESTAMP(Regexp_Replace(#{eddt},'[^0-9]',''),'YYYYMMDD')
 		</if>
+		<if test="job_cd != null">
+		AND		JOB_CD = #{job_cd}
+		</if>
 		<if test='delay_chk == "Y"'>
 		AND		CHK_YN		= 'N'
 		AND		TO_CHAR(SET_TM,'HH24MISS') &lt; TO_CHAR(SYSTIMESTAMP,'HH24MISS')
