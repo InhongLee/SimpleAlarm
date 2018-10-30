@@ -1,5 +1,10 @@
 /**
  * Alarm 공통 method
+ * 
+ * gfn_diffDate(stdt, eddt) 		: 시작일과 종료일 사이의 기간을 일자로 반환하는 함수
+ * gfn_getTime(time) 				: 입력받은 변수가 시간이면 time형식을 변환하여 반환하는 함수
+ * gfn_autoMapping(dataSet, divId) 	: JSON데이터를 선택한 div에 자동매핑하는 함수
+ * gfn_clearDs(dataset)				: 선택된 JSON의 value를 초기화
  */
 
 /**
@@ -32,3 +37,66 @@ function gfn_getTime(time) {
 	if(isTime == true) rslt = nHours+":"+nMinute+":"+nSecond;
 	return rslt;
 }
+
+
+function gfn_cloneDs(fromDs) {
+	var toDs = new Array();
+	for( var key in fromDs ) {
+		var value = fromDs[key];
+		eval("toDs." + key + " = value;");
+	}
+	return toDs;
+}
+
+/**
+ * json을 div의 tag value로 automapping하는 함수
+ * mapping이 필요한 tag의 class에 'datamap' 을 추가한다.
+ * datamap 된 tag에 data-key 속성을 추가하여 json의 key를 대입한다.
+ * 만약 후처리가 필요한 type이라면 data-type 속성을 추가한다.
+ * @param dataSet
+ * @param divId
+ * @returns
+ */
+function gfn_autoMapping(dataSet, divId) {
+	for( var key in dataSet ) {
+		var value 		= dataSet[key];
+		var selector 	= "div[id='" + divId + "'] .datamap[data-key='" + key + "']";
+		var $type 		= $(selector).attr("data-type");
+		switch($type) {
+			case "checkbox"	: eval("fn_set_" + key + "(value);"); break;
+			case "time"		: $(selector).val(gfn_getTime(value));break;
+			default			: $(selector).val(value)			; break;
+		}
+	}
+}
+
+function gfn_autoMapOut(dataSet, divId) {
+	for( var key in dataSet ) {
+		var selector 	= "div[id='" + divId + "'] .datamap[data-key='" + key + "']";
+		var $type		= $(selector).attr("data-type");
+		var value		= "";
+		switch($type) {
+			case "checkbox":
+				$(selector).each(function(){
+					value += this.checked ? "1" : "0";
+				});
+				break;
+			default:
+				value = $(selector).val();
+				break;
+		}
+		if(value != null) dataSet[key] = value;
+	}
+	return dataSet;
+}
+
+function gfn_clearDs(dataSet) {
+	for( var key in dataSet ) {
+		dataSet[key] = '';
+	} 
+}
+
+
+
+
+

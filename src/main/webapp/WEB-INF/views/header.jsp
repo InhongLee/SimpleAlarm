@@ -6,7 +6,7 @@
 <body>
 <nav class="navbar navbar-default">
 	
-	<div class="container-fluid">
+	<div class="container-fluid" id="headerSrch">
 		
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar-collape-f1200">
@@ -21,17 +21,17 @@
 		<div class="collapse navbar-collapse" id="#bs-navbar-collape-f1200">
 			<form class="navbar-form navbar-left" id="header_form_01" role="search">
 				<div class="form-group">
-					<input type="text" class="form-control" id="header_deverId" placeholder="개발자ID">
+					<input type="text" class="form-control datamap" id="header_deverId" data-key="DEVER_ID" placeholder="개발자ID">
 					<div class="input-group">
 						<div class="input-group-addon"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></div>
-						<input type="text" class="form-control" id="header_custId" placeholder="사용자ID">
+						<input type="text" class="form-control datamap" id="header_custId" data-key="CUST_ID" placeholder="사용자ID">
 					</div>
-					<input type="date" class="form-control" id="header_stdt" placeholder="조회시작일">
+					<input type="date" class="form-control datamap" id="header_stdt" data-key="STDT" placeholder="조회시작일" max="9999-12-31">
 					~
-					<input type="date" class="form-control" id="header_eddt" placeholder="조회종료일">
-					<input type="text" class="form-control" id="header_jobCd" placeholder="작업내용">
+					<input type="date" class="form-control datamap" id="header_eddt" data-key="EDDT" placeholder="조회종료일" max="9999-12-31">
+					<input type="text" class="form-control datamap" id="header_jobCd" data-key="JOB_CD" placeholder="작업내용">
 					<label class="checkbox-inline">
-						<input type="checkbox" id="header_delayChk" value="Y">지연여부
+						<input type="checkbox" class="datamap" name="" id="header_delayChk" data-key="DELAY_CHK" data-type="checkbox" value="Y">지연여부
 					</label>
 					<button type="button" class="btn btn-default" id="header_clear">화면지움</button>
 					<button type="button" class="btn btn-primary" id="header_srch" >SEARCH</button>
@@ -49,10 +49,15 @@
 /****************************************************/
 var header_deverId, header_custId, header_stdt, header_eddt, header_jobCd, header_delayChk;
 var fv_deverId, fv_custId, fv_sqno, fv_setTm, fv_jobCd, fv_chkYn, fv_lstChkTs, fv_wkItvRule, fv_stMth, fv_edMth, fv_delYn, fv_fstPcTs, fv_pcTs, fv_lupdCnt;
-var ds_headerSrch;
-var ds_jobSch;
+var ds_headerSrch = 
+	{"DEVER_ID"	: ''
+	,"CUST_ID"	: ''
+	,"STDT"		: ''
+	,"EDDT"		: ''
+	,"JOB_CD"	: ''
+	,"DELAY_CHK": ''};
 var arr_jobSchLst = new Array();
-var ds_frame = {};
+
 /****************************************************/
 /*	header_onload[최초로드]							*/
 /****************************************************/
@@ -63,18 +68,17 @@ $(document).ready(function() {
 /*	frame_init[초기화]								*/
 /****************************************************/
 function fn_initFrame() {
-	ds_headerSrch = {};
-	ds_jobSch = {};
-	arr_jobSchLst.length = 0;
+	gfn_clearDs(ds_headerSrch);
+	arr_jobSchLst.length 	= 0;
 }
 /****************************************************/
 /*	transaction[서버호출]							*/
 /****************************************************/
-function fn_headerSrch() {
+function fn_srch() {
 	if(!fn_validation()) return false;
 	fn_initFrame();
 	var jqxhr =$.ajax({
-		beforeSend: fn_setHeaderDs(),
+		beforeSend: fn_setDsSrch(),
 		url: "MSS010_00S",
 		method: "POST",
 		contentType: "application/json;charset=UTF-8",
@@ -91,45 +95,16 @@ function fn_headerSrch() {
 /****************************************************/
 function fn_callback(data) {
 	$(data).each(
-		function() {
-			fv_deverId 	= this.dever_id   ;
-			fv_custId   = this.cust_id    ;
-			fv_sqno     = this.sqno       ;
-			fv_setTm    = this.set_tm     ;
-			fv_jobCd    = this.job_cd     ;
-			fv_chkYn    = this.chk_yn     ;
-			fv_lstChkTs = this.lst_chk_ts ;
-			fv_wkItvRule= this.wk_itv_rule;
-			fv_stMth    = this.st_mth     ;
-			fv_edMth    = this.ed_mth     ;
-			fv_delYn    = this.del_yn     ;
-			fv_fstPcTs  = this.fst_pc_ts  ;
-			fv_pcTs     = this.pc_ts      ;
-			fv_lupdCnt  = this.lupd_cnt   ;
-			ds_jobSch    =  {dever_id	: fv_deverId	
-							,cust_id    : fv_custId     
-							,sqno       : fv_sqno       
-							,set_tm     : fv_setTm      
-							,job_cd     : fv_jobCd      
-							,chk_yn     : fv_chkYn      
-							,lst_chk_ts : fv_lstChkTs   
-							,wk_itv_rule: fv_wkItvRule  
-							,st_mth     : fv_stMth      
-							,ed_mth     : fv_edMth      
-							,del_yn     : fv_delYn      
-							,fst_pc_ts  : fv_fstPcTs    
-							,pc_ts      : fv_pcTs       
-							,lupd_cnt   : fv_lupdCnt	};
-			arr_jobSchLst.push(ds_jobSch);
-			
+		function(index,value) {
+			arr_jobSchLst.push(gfn_cloneDs(value));		
 		});
 	fn_setList();
 }
 /****************************************************/
 /*	action_event[액션이벤트]							*/
 /****************************************************/
-$('#header_srch').click(fn_headerSrch);	
-
+$('#header_srch').click(fn_srch);	
+$('#header_clear').click(fn_initFrame);
 
 /****************************************************/
 /*	user_def_function[사용자정의함수]					*/
@@ -139,22 +114,12 @@ function fn_validation() {
 	if($('#header_stdt'		).val() == '') 	{alert("조회시작일은 필수입력항목입니다."	); return false;}
 	if($('#header_eddt'		).val() == '') 	{alert("조회종료일은 필수입력항목입니다."	); return false;}
 	if(gfn_diffDate($('#header_stdt').val(),$('#header_eddt').val()) > 31) {alert("검색기간은 1달 이내로 선택하세요."); return false;}
+	if(gfn_diffDate($('#header_stdt').val(),$('#header_eddt').val()) < 0 ) {alert("종료일이 시작일보다 빠를수 없습니다."); return false;}
 	return true;
 }
 
-function fn_setHeaderDs() {
-	header_deverId	= $('#header_deverId'	).val();
-	header_custId   = $('#header_custId'	).val();
-	header_stdt     = $('#header_stdt'		).val();
-	header_eddt     = $('#header_eddt'		).val();
-	header_jobCd    = $('#header_jobCd'		).val();
-	header_delayChk = $('#header_delayChk'	).prop("checked") ? "Y" : "N";
-	ds_headerSrch = {"DEVER_ID"	: header_deverId
-					,"CUST_ID"	: header_custId
-					,"STDT"		: header_stdt
-					,"EDDT"		: header_eddt
-					,"JOB_CD"	: header_jobCd
-					,"DELAY_CHK": header_delayChk};
+function fn_setDsSrch() {
+	ds_headerSrch = gfn_autoMapOut(ds_headerSrch, 'headerSrch');
 }
 
 function fn_setList() {
@@ -163,12 +128,11 @@ function fn_setList() {
 		strMsg 	+= "<tr class='active'><th>사용자ID</th><th>설정시간</th><th>작업내용</th><th>확인여부</th></tr>";
 	for(var i=0; i<arr_jobSchLst.length; i++){
 		strMsg	+= "<tr id='MSS010_t01_tr'"+idx+">";
-		strMsg	+= "<td>" + arr_jobSchLst[i]["cust_id"] + "</td>";
-		strMsg	+= "<td>" + arr_jobSchLst[i]["set_tm"] + "</td>";
+		strMsg	+= "<td>" + arr_jobSchLst[i]["cust_id"] + "</a></td>";
+		strMsg	+= "<td>" + gfn_getTime(arr_jobSchLst[i]["set_tm"]) + "</td>";
 		strMsg	+= "<td>" + arr_jobSchLst[i]["job_cd"] + "</td>";
 		strMsg	+= "<td>" + arr_jobSchLst[i]["chk_yn"] + "</td>";
 		strMsg	+= "</tr>";
-		
 	}
 	$('#MSS010_00M_t01').html(strMsg);
 }

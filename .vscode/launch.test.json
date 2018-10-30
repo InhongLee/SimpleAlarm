@@ -1,0 +1,30 @@
+{
+    "run": {
+        "default": "",
+        "items": [
+            {
+                "name": "alarm",
+                "projectName": "alarm",
+                "workingDirectory": "c:\\DEV\\workspace\\SimpleAlarm",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    },
+    "debug": {
+        "default": "",
+        "items": [
+            {
+                "name": "alarm",
+                "projectName": "alarm",
+                "workingDirectory": "c:\\DEV\\workspace\\SimpleAlarm",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    }
+}
